@@ -168,6 +168,7 @@ const Products = () => {
   );
 };
 export default Products;
+
 interface Props {
   displayBtn?: boolean;
   quantity?: number;
@@ -186,7 +187,6 @@ const Wrapper = styled.div`
 `;
 const ProductDetails = styled.div`
   flex: 1;
-  /* height: 100vh; */
   margin: 0 20px 0 0;
   padding: 10px 15px;
   border-radius: 5px;
@@ -306,6 +306,6 @@ const ButtonSuccess = styled.button<Props>`
   border-radius: 5px;
   margin-top: 10px;
   float: right;
-  display: ${(props: any) =>
+  display: ${(props: Props) =>
     props.quantity !== 0 && props.displayBtn ? "block" : "none"};
 `;

@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
-import {
-  AppDispatch,
-  // fetchProductsAsync,
-  useAppDispatch,
-} from "../redux/store";
+import { AppDispatch, useAppDispatch } from "../redux/store";
 
 import { RootState } from "../redux/reducer";
 import {
@@ -220,7 +216,7 @@ const ListCartDetail = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  display: ${(props: any) => (props.display ? "none" : "flex")};
+  display: ${(props: Props) => (props.display ? "none" : "flex")};
 `;
 const ListImg = styled.div`
   height: 26vh;
@@ -278,7 +274,7 @@ const NoProduct = styled.div<Props>`
   align-items: center;
   height: 30vh;
   font-size: 22px;
-  display: ${(props: any) => (props.display ? "none" : "flex")};
+  display: ${(props: Props) => (props.display ? "none" : "flex")};
 `;
 
 const OrderInfo = styled.div<Props>`
@@ -288,7 +284,7 @@ const OrderInfo = styled.div<Props>`
   border-radius: 5px;
   -webkit-box-shadow: 3px 2px 9px 4px rgba(0, 0, 0, 0.18);
   box-shadow: 3px 2px 9px 4px rgba(0, 0, 0, 0.18);
-  display: ${(props: any) => (props.display ? "none" : "block")};
+  display: ${(props: Props) => (props.display ? "none" : "block")};
 `;
 
 const OrderDetail = styled.div``;
@@ -297,7 +293,7 @@ const OrderContent = styled.div<Props>`
   justify-content: space-between;
   align-items: center;
   margin: 8px 0;
-  font-weight: ${(props: any) => (props.fonts === "bold" ? "600" : "")};
+  font-weight: ${(props: Props) => (props.fonts === "bold" ? "600" : "")};
 `;
 const TitleOrder = styled.p``;
 const DescOrder = styled.div``;
@@ -309,13 +305,13 @@ const Button = styled.button<Props>`
   margin: 15px 0;
   text-align: center;
   font-size: 18px;
-  cursor: ${(props: any) => (props.cart === 0 ? "not-allowed" : "pointer")};
-  border: ${(props: any) =>
+  cursor: ${(props: Props) => (props.cart === 0 ? "not-allowed" : "pointer")};
+  border: ${(props: Props) =>
     props.feature === "checkout" ? "none" : "1px solid #ccc"};
   border-radius: 5px;
-  background-color: ${(props: any) =>
+  background-color: ${(props: Props) =>
     props.feature === "checkout" ? "blue" : "white"};
-  color: ${(props: any) => (props.feature === "checkout" ? "white" : "blue")};
+  color: ${(props: Props) => (props.feature === "checkout" ? "white" : "blue")};
 `;
 const Purchased = styled.div<Props>`
   display: flex;
@@ -326,12 +322,12 @@ const Purchased = styled.div<Props>`
 const PurchasedAnnouncement = styled.div<Props>`
   color: white;
   text-align: center;
-  background-color: ${(props: any) =>
+  background-color: ${(props: Props) =>
     props.type === "purchase" ? "blue" : "green"};
   padding: 10px;
   border-radius: 5px;
   margin-top: 20px;
   width: 300px;
-  cursor: ${(props: any) =>
+  cursor: ${(props: Props) =>
     props.type === "purchase" ? "pointer" : "default"};
 `;
