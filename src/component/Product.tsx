@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { RootState } from "../redux/reducer";
 import {
   CartItem,
-  Product,
   fetchProductsAsync,
   onIncrementQuantity,
   onSendToCart,
   onShowDetailProduct,
   onDecrementQuantity,
 } from "../redux/ProductsSlice";
-import { AppDispatch, useAppDispatch, useAppSelector } from "../redux/store";
+import { AppDispatch, useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Add, Done, Remove, ShoppingCartOutlined } from "@material-ui/icons";
-import Nav from "./Nav";
+import { Product } from "../redux/apiCall";
+const Nav = lazy(() => import("./Nav"));
 
 const Products = () => {
   const [displayBtn, setDisplayBtn] = useState(false);

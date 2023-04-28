@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
-const Product = lazy(() => import("./main/Product"));
-const Checkout = lazy(() => import("./main/Checkout"));
+const Product = lazy(() => import("./component/Product"));
+const Checkout = lazy(() => import("./component/Checkout"));
 
 function App() {
   const router = createBrowserRouter([

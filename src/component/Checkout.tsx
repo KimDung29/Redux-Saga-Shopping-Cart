@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, useAppDispatch } from "../redux/store";
-
 import { RootState } from "../redux/reducer";
 import {
   CartItem,
@@ -13,9 +12,9 @@ import {
   onIncrementProductCheckout,
   onPurchase,
 } from "../redux/ProductsSlice";
-import Nav from "./Nav";
 import styled from "styled-components";
 import { Add, Delete, Done, Remove } from "@material-ui/icons";
+const Nav = lazy(() => import("./Nav"));
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();

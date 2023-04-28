@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "https://fakestoreapi.com";
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   price: number;

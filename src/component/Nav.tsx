@@ -13,7 +13,7 @@ const Nav = () => {
       <Navigation>
         <NavLeft onClick={() => navigate("/")}>Products</NavLeft>
         <NavCenter>
-          <Logo>KIM.</Logo>
+          <Logo>STORE.</Logo>
         </NavCenter>
 
         <NavRight>
