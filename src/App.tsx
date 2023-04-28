@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Suspense, lazy } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+const Product = lazy(() => import("./main/Product"));
+const Checkout = lazy(() => import("./main/Checkout"));
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Product />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/checkout",
+      element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          {" "}
+          <Checkout />
+        </Suspense>
+      ),
+    },
+  ]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 
