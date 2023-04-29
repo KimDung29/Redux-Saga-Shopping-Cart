@@ -39,7 +39,7 @@ export const fetchProductsAsync = createAsyncThunk(
     const response = await axios.get<Product[]>(
       "https://fakestoreapi.com/products"
     );
-    return response.data;
+    return response.data.slice(0,8);
   }
 );
 
@@ -56,7 +56,6 @@ const productsSlices = createSlice({
 
     onSendToCart: (state, action: PayloadAction<{ newItem: CartItem }>) => {
       if(state.quantity > 0 ){
-
         const existingItem = state.cartItems.find(
           (item) => item.product.id === action.payload.newItem.product.id
         );
@@ -68,7 +67,7 @@ const productsSlices = createSlice({
         }
       } else {
         alert(' Please select product quantity')
-
+        
       }
     },
 

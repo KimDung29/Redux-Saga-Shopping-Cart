@@ -15,13 +15,15 @@ import { Add, Done, Remove, ShoppingCartOutlined } from "@material-ui/icons";
 import { Product } from "../redux/apiCall";
 const Nav = lazy(() => import("./Nav"));
 
+// import { throttle } from "lodash";
+
 const Products = () => {
   const [displayBtn, setDisplayBtn] = useState(false);
 
   const { isLoading, error, products, quantity, currentProduct } = useSelector(
     (state: RootState) => state.products
   );
-
+  console.log(products);
   const dispatch: AppDispatch = useAppDispatch();
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const Products = () => {
     dispatch(onIncrementQuantity({ quantity }));
   };
 
+  // const handleSendToCart = throttle((e: any) => {
   const handleSendToCart = (e: any) => {
     e.preventDefault();
     const newItem: CartItem = {
@@ -58,6 +61,7 @@ const Products = () => {
     dispatch(onSendToCart({ newItem }));
     setDisplayBtn(true);
   };
+  // , 1000);
 
   return (
     <>
@@ -72,7 +76,7 @@ const Products = () => {
 
               <ProductContent>
                 <Title>{products[0]?.title}</Title>
-                <Des>{products[0]?.description.slice(0, 100)} </Des>
+                <Des>{products[0]?.description} </Des>
                 <Computed>
                   <Quantity>
                     <QuantityItem
@@ -110,7 +114,7 @@ const Products = () => {
 
               <ProductContent>
                 <Title>{currentProduct[0]?.title}</Title>
-                <Des>{currentProduct[0]?.description.slice(0, 100)} </Des>
+                <Des>{currentProduct[0]?.description} </Des>
                 <Computed>
                   <Quantity>
                     <QuantityItem
@@ -176,7 +180,7 @@ interface Props {
 
 const Container = styled.div`
   background-color: #e5e7eb;
-  width: 100%;
+  height: 100vh;
 `;
 
 const Wrapper = styled.div`

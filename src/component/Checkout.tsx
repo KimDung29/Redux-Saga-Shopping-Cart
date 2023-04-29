@@ -45,6 +45,7 @@ const Checkout: React.FC = () => {
     (acc, curr) => (acc += curr.product.price * curr.quantity),
     0
   );
+
   const handleCheckout = (e: any) => {
     e.preventDefault();
     if (cartItems.length > 0) {
@@ -52,7 +53,6 @@ const Checkout: React.FC = () => {
       if (confirm) {
         setDisplay(true);
       }
-
       dispatch(onPurchase());
     }
   };
@@ -63,7 +63,6 @@ const Checkout: React.FC = () => {
         <Nav />
         <Wrapper>
           <MainTitle>My Shopping Cart</MainTitle>
-
           <WrapperCart>
             <ListCart>
               {cartItems.length > 0 ? (
