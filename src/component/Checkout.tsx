@@ -18,6 +18,7 @@ const Nav = lazy(() => import("./Nav"));
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
+
   const [display, setDisplay] = useState(false);
 
   const dispatch: AppDispatch = useAppDispatch();
@@ -96,7 +97,9 @@ const Checkout: React.FC = () => {
                             <Remove />
                           </QuantityItem>
 
-                          <QuantityNumber>{quantity}</QuantityNumber>
+                          <QuantityNumber>
+                            {cartItems.map((item) => item.quantity)}
+                          </QuantityNumber>
 
                           <QuantityItem
                             onClick={() =>

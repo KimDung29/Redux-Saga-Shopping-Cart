@@ -15,15 +15,13 @@ import { Add, Done, Remove, ShoppingCartOutlined } from "@material-ui/icons";
 import { Product } from "../redux/apiCall";
 const Nav = lazy(() => import("./Nav"));
 
-// import { throttle } from "lodash";
-
 const Products = () => {
   const [displayBtn, setDisplayBtn] = useState(false);
 
   const { isLoading, error, products, quantity, currentProduct } = useSelector(
     (state: RootState) => state.products
   );
-  console.log(products);
+
   const dispatch: AppDispatch = useAppDispatch();
 
   useEffect(() => {
@@ -50,7 +48,6 @@ const Products = () => {
     dispatch(onIncrementQuantity({ quantity }));
   };
 
-  // const handleSendToCart = throttle((e: any) => {
   const handleSendToCart = (e: any) => {
     e.preventDefault();
     const newItem: CartItem = {
@@ -61,7 +58,6 @@ const Products = () => {
     dispatch(onSendToCart({ newItem }));
     setDisplayBtn(true);
   };
-  // , 1000);
 
   return (
     <>
@@ -73,7 +69,6 @@ const Products = () => {
               <ProductImg>
                 <Img src={products[0]?.image} alt={products[0]?.title} />
               </ProductImg>
-
               <ProductContent>
                 <Title>{products[0]?.title}</Title>
                 <Des>{products[0]?.description} </Des>
