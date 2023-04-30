@@ -1,4 +1,5 @@
-import { lazy, useEffect, useRef, useState } from "react";
+import Nav from "./Nav";
+import { useEffect, useState } from "react";
 import { RootState } from "../redux/reducer";
 import {
   CartItem,
@@ -13,11 +14,154 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Add, Done, Remove, ShoppingCartOutlined } from "@material-ui/icons";
 import { Product } from "../redux/apiCall";
-import React from "react";
-const Nav = lazy(() => import("./Nav"));
+import {
+  borderRadiusAndCursorStyles,
+  boxShadowStyles,
+  colorAndCursor,
+  flexBetweenStyles,
+  flexCenterStyles,
+  flexStartStyles,
+  imgStyles,
+} from "./Re-use-css";
+
+interface Props {
+  displayBtn?: string;
+  quantity?: number;
+}
+
+const Container = styled.div`
+  background-color: #e5e7eb;
+  height: 100vh;
+`;
+
+const Wrapper = styled.div`
+  margin: 20px;
+  ${flexBetweenStyles}
+`;
+
+const ProductDetails = styled.div`
+  flex: 1;
+  margin: 0 20px 0 0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  ${boxShadowStyles}
+  flex-direction: column;
+  ${flexCenterStyles}
+`;
+
+const ProductImg = styled.div`
+  height: 40vh;
+  width: 40%;
+  margin-bottom: 10px;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+const ProductContent = styled.div``;
+const Title = styled.h5``;
+const Des = styled.p``;
+
+const Computed = styled.div`
+  margin-top: 15px;
+  ${flexBetweenStyles}
+`;
+const Quantity = styled.div`
+  width: 100px;
+  padding: 5px 5px;
+  border: 1px solid #a8a6a6;
+  border-radius: 5px;
+  background-color: #e8e7e7;
+  ${flexBetweenStyles}
+`;
+
+const QuantityItem = styled.div`
+  ${colorAndCursor}
+`;
+
+const QuantityNumber = styled.div`
+  margin: 0 10px;
+  font-size: 18px;
+`;
+
+const Price = styled.div`
+  ${flexBetweenStyles}
+`;
+const PriceDetail = styled.h4`
+  font-weight: 500;
+`;
+
+const Button = styled.button`
+  ${flexCenterStyles}
+  ${borderRadiusAndCursorStyles}
+  padding: 8px 10px;
+  margin-left: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+`;
+
+const ProductList = styled.div`
+  flex: 1;
+`;
+
+const WrapperList = styled.div`
+  height: 15vh;
+  flex: 1;
+  ${flexStartStyles}
+  ${boxShadowStyles}
+  ${borderRadiusAndCursorStyles}
+  margin: 5px 5px 10px 0px;
+  padding: 0 5px;
+`;
+
+const ImgListWrapper = styled.div`
+  height: 90%;
+  flex: 1;
+`;
+
+const ImgList = styled.img`
+  ${imgStyles}
+`;
+
+const DescList = styled.p`
+  font-size: 11px;
+  margin: 0;
+`;
+
+const ListPrice = styled.div`
+  flex: 5;
+  padding: 0 15px;
+`;
+
+const PriceListAndDetail = styled.div`
+  margin-top: 5px;
+  ${flexBetweenStyles}
+`;
+
+const PriceListItemTitle = styled.h6`
+  margin-bottom: 5px;
+`;
+const PriceListItemDetail = styled.p`
+  font-size: 14px;
+`;
+
+const ButtonSuccess = styled.button<Props>`
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  float: right;
+  display: ${(props: Props) =>
+    props.quantity !== 0 && props.displayBtn === "true" ? "block" : "none"};
+`;
 
 const Products = () => {
-  const [displayBtn, setDisplayBtn] = useState(false);
+  const [displayBtn, setDisplayBtn] = useState("false");
 
   const { isLoading, error, products, quantity, currentProduct } = useSelector(
     (state: RootState) => state.products
@@ -55,10 +199,10 @@ const Products = () => {
       product: currentProduct[0] || products[0],
       quantity: quantity,
     };
-    setDisplayBtn(true);
+    setDisplayBtn("true");
     if (quantity === 0) {
       window.alert(" Please select product quantity");
-      setDisplayBtn(false);
+      setDisplayBtn("false");
     }
     dispatch(onSendToCart({ newItem }));
   };
@@ -144,7 +288,7 @@ const Products = () => {
             </ProductDetails>
           )}
 
-          <ProductList onClick={() => setDisplayBtn(false)}>
+          <ProductList onClick={() => setDisplayBtn("false")}>
             {products.slice(0, 5).map((product: Product) => (
               <WrapperList
                 key={product.id}
@@ -155,7 +299,7 @@ const Products = () => {
                   <ImgList src={product.image} alt="" />
                 </ImgListWrapper>
                 <ListPrice>
-                  <Title>{product.title}</Title>
+                  <Title>{product.title.slice(0, 50)}...</Title>
                   <DescList>{product.description.slice(0, 150)}...</DescList>
                   <PriceListAndDetail>
                     <PriceListItemTitle>$ {product.price}</PriceListItemTitle>
@@ -171,144 +315,3 @@ const Products = () => {
   );
 };
 export default Products;
-
-interface Props {
-  displayBtn?: boolean;
-  quantity?: number;
-}
-
-const Container = styled.div`
-  background-color: #e5e7eb;
-  height: 100vh;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px;
-`;
-const ProductDetails = styled.div`
-  flex: 1;
-  margin: 0 20px 0 0;
-  padding: 10px 15px;
-  border-radius: 5px;
-  background-color: white;
-  -webkit-box-shadow: 1px 0px 9px 8px rgba(0, 0, 0, 0.15);
-  box-shadow: 1px 0px 9px 8px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const ProductImg = styled.div`
-  height: 40vh;
-  width: 40%;
-  margin-bottom: 10px;
-`;
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-const ProductContent = styled.div``;
-const Title = styled.h5``;
-const Des = styled.p``;
-
-const Computed = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 15px;
-`;
-const Quantity = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100px;
-  padding: 5px 5px;
-  border: 1px solid #a8a6a6;
-  border-radius: 5px;
-  background-color: #e8e7e7;
-`;
-const QuantityItem = styled.div`
-  color: red;
-  cursor: pointer;
-`;
-const QuantityNumber = styled.div`
-  margin: 0 10px;
-  font-size: 18px;
-`;
-const Price = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-const PriceDetail = styled.h4`
-  font-weight: 500;
-`;
-const Button = styled.button`
-  margin-left: 10px;
-  padding: 8px 10px;
-  display: flex;
-  align-items: center;
-  border: none;
-  border-radius: 5px;
-  background-color: blue;
-  color: white;
-  cursor: pointer;
-`;
-const ProductList = styled.div`
-  flex: 1;
-`;
-const WrapperList = styled.div`
-  height: 15vh;
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin: 5px 5px 10px 0px;
-  background-color: white;
-  border-radius: 5px;
-  padding: 0 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  background-color: white;
-  -webkit-box-shadow: 3px 2px 9px 4px rgba(0, 0, 0, 0.18);
-  box-shadow: 3px 2px 9px 4px rgba(0, 0, 0, 0.18);
-`;
-const ImgListWrapper = styled.div`
-  height: 90%;
-`;
-const ImgList = styled.img`
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-`;
-const DescList = styled.p`
-  font-size: 12px;
-  margin: 0;
-`;
-const ListPrice = styled.div`
-  flex: 2;
-  padding: 0 15px;
-`;
-const PriceListAndDetail = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 5px;
-`;
-const PriceListItemTitle = styled.h6``;
-const PriceListItemDetail = styled.h6``;
-
-const ButtonSuccess = styled.button<Props>`
-  background-color: green;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin-top: 10px;
-  float: right;
-  display: ${(props: Props) =>
-    props.quantity !== 0 && props.displayBtn ? "block" : "none"};
-`;

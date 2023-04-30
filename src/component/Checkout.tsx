@@ -1,6 +1,6 @@
-import React, { lazy, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
+import Nav from "./Nav";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, useAppDispatch } from "../redux/store";
 import { RootState } from "../redux/reducer";
@@ -14,12 +14,182 @@ import {
 } from "../redux/ProductsSlice";
 import styled from "styled-components";
 import { Add, Delete, Done, Remove } from "@material-ui/icons";
-const Nav = lazy(() => import("./Nav"));
+import {
+  boxShadowStyles,
+  colorAndCursor,
+  flexBetweenStyles,
+  flexCenterStyles,
+  flexStartAndBetweenStyles,
+  imgStyles,
+} from "./Re-use-css";
+
+interface Props {
+  feature?: string;
+  fonts?: string;
+  display?: string;
+  type?: string;
+  cart?: number;
+}
+
+const Container = styled.div<Props>`
+  background-color: #e5e7eb;
+  width: 100%;
+  height: ${(props: any) => (props.cart > 3 ? "100%" : "100vh")};
+`;
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 70%;
+`;
+
+const MainTitle = styled.h2`
+  font-weight: 500;
+  text-align: center;
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+`;
+
+const WrapperCart = styled.div`
+  ${flexStartAndBetweenStyles}
+`;
+
+const ListCart = styled.div`
+  flex: 2;
+  margin: 0 20px 0 0;
+`;
+
+const ListCartDetail = styled.div<Props>`
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 5px;
+  ${flexBetweenStyles}
+  display: ${(props: Props) => (props.display == "true" ? "none" : "flex")};
+`;
+
+const ListImg = styled.div`
+  flex: 1;
+  height: 20vh;
+  /* width: 30vw; */
+  margin-right: 20px;
+`;
+
+const Img = styled.img`
+  ${imgStyles}
+`;
+
+const ListContent = styled.div`
+  flex: 3;
+`;
+
+const Content = styled.div`
+  ${flexStartAndBetweenStyles}
+`;
+
+const ContentItem = styled.div``;
+const Title = styled.h5``;
+const Desc = styled.p`
+  font-size: 12px;
+  margin: 5px 0;
+`;
+
+const DeleteIcon = styled.div`
+  ${colorAndCursor}
+`;
+
+const ListOrder = styled.div`
+  ${flexBetweenStyles}
+  margin-top: 10px;
+`;
+
+const Quantity = styled.div`
+  ${flexBetweenStyles}
+
+  width: 100px;
+  padding: 0 5px;
+  border: 1px solid #a8a6a6;
+  border-radius: 5px;
+  background-color: #e8e7e7;
+`;
+
+const QuantityItem = styled.div`
+  ${colorAndCursor}
+`;
+
+const QuantityNumber = styled.div`
+  margin: 0 10px;
+  font-size: 18px;
+`;
+
+const PriceTotal = styled.h4``;
+
+const NoProduct = styled.div<Props>`
+  ${flexCenterStyles}
+  height: 30vh;
+  font-size: 22px;
+  display: ${(props: Props) => (props.display === "true" ? "none" : "flex")};
+`;
+
+const OrderInfo = styled.div<Props>`
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 5px;
+  ${boxShadowStyles}
+  display: ${(props: Props) => (props.display === "true" ? "none" : "block")};
+`;
+
+const OrderDetail = styled.div``;
+
+const OrderContent = styled.div<Props>`
+  ${flexBetweenStyles}
+  margin: 8px 0;
+  font-weight: ${(props: Props) => (props.fonts === "bold" ? "600" : "")};
+`;
+
+const TitleOrder = styled.p``;
+const DescOrder = styled.div``;
+
+const Button = styled.button<Props>`
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 15px 0;
+  text-align: center;
+  font-size: 18px;
+  cursor: ${(props: Props) => (props.cart === 0 ? "not-allowed" : "pointer")};
+  border: ${(props: Props) =>
+    props.feature === "checkout" ? "none" : "1px solid #ccc"};
+  border-radius: 5px;
+  background-color: ${(props: Props) =>
+    props.feature === "checkout" ? "blue" : "white"};
+  color: ${(props: Props) => (props.feature === "checkout" ? "white" : "blue")};
+`;
+
+const Purchased = styled.div<Props>`
+  flex-direction: column;
+  ${flexCenterStyles}
+`;
+
+const PurchasedAnnouncement = styled.div<Props>`
+  color: white;
+  text-align: center;
+  background-color: ${(props: Props) =>
+    props.type === "purchase" ? "blue" : "green"};
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  width: 300px;
+  cursor: ${(props: Props) =>
+    props.type === "purchase" ? "pointer" : "default"};
+`;
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
 
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState("false");
 
   const dispatch: AppDispatch = useAppDispatch();
   const { cartItems, quantity } = useSelector(
@@ -52,7 +222,7 @@ const Checkout: React.FC = () => {
     if (cartItems.length > 0) {
       const confirm = window.confirm(`Do you want to purchase ?`);
       if (confirm) {
-        setDisplay(true);
+        setDisplay("true");
       }
       dispatch(onPurchase());
     }
@@ -60,7 +230,7 @@ const Checkout: React.FC = () => {
 
   return (
     <>
-      <Container>
+      <Container cart={cartItems.length}>
         <Nav />
         <Wrapper>
           <MainTitle>My Shopping Cart</MainTitle>
@@ -97,9 +267,7 @@ const Checkout: React.FC = () => {
                             <Remove />
                           </QuantityItem>
 
-                          <QuantityNumber>
-                            {cartItems.map((item) => item.quantity)}
-                          </QuantityNumber>
+                          <QuantityNumber>{item.quantity}</QuantityNumber>
 
                           <QuantityItem
                             onClick={() =>
@@ -153,7 +321,7 @@ const Checkout: React.FC = () => {
             </OrderInfo>
           </WrapperCart>
         </Wrapper>
-        {display ? (
+        {display === "true" ? (
           <Purchased>
             <PurchasedAnnouncement>
               <Done style={{ color: "yellow" }} />
@@ -173,162 +341,3 @@ const Checkout: React.FC = () => {
 };
 
 export default Checkout;
-
-interface Props {
-  feature?: string;
-  fonts?: string;
-  display?: boolean;
-  type?: string;
-  cart?: number;
-}
-const Container = styled.div`
-  background-color: #e5e7eb;
-  width: 100%;
-  height: 100vh;
-`;
-const Wrapper = styled.div`
-  margin: 0 auto;
-  width: 70%;
-`;
-const MainTitle = styled.h2`
-  font-weight: 500;
-  text-align: center;
-  background-color: white;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin: 10px 0;
-`;
-const WrapperCart = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-`;
-const ListCart = styled.div`
-  flex: 2;
-  margin: 0 20px 0 0;
-`;
-
-const ListCartDetail = styled.div<Props>`
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  background-color: white;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  display: ${(props: Props) => (props.display ? "none" : "flex")};
-`;
-const ListImg = styled.div`
-  height: 26vh;
-  width: 100%;
-  margin-right: 20px;
-`;
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`;
-const ListContent = styled.div``;
-const Content = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-`;
-const ContentItem = styled.div``;
-const Title = styled.h5``;
-const Desc = styled.p`
-  font-size: 14px;
-  margin: 5px 0;
-`;
-const DeleteIcon = styled.div`
-  color: red;
-  cursor: pointer;
-`;
-const ListOrder = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-`;
-const Quantity = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100px;
-  padding: 3px 5px;
-  border: 1px solid #a8a6a6;
-  border-radius: 5px;
-  background-color: #e8e7e7;
-`;
-const QuantityItem = styled.div`
-  color: red;
-  cursor: pointer;
-`;
-const QuantityNumber = styled.div`
-  margin: 0 10px;
-  font-size: 18px;
-`;
-const PriceTotal = styled.h4``;
-const NoProduct = styled.div<Props>`
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
-  font-size: 22px;
-  display: ${(props: Props) => (props.display ? "none" : "flex")};
-`;
-
-const OrderInfo = styled.div<Props>`
-  flex: 1;
-  padding: 10px 15px;
-  background-color: white;
-  border-radius: 5px;
-  -webkit-box-shadow: 3px 2px 9px 4px rgba(0, 0, 0, 0.18);
-  box-shadow: 3px 2px 9px 4px rgba(0, 0, 0, 0.18);
-  display: ${(props: Props) => (props.display ? "none" : "block")};
-`;
-
-const OrderDetail = styled.div``;
-const OrderContent = styled.div<Props>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 8px 0;
-  font-weight: ${(props: Props) => (props.fonts === "bold" ? "600" : "")};
-`;
-const TitleOrder = styled.p``;
-const DescOrder = styled.div``;
-
-const Button = styled.button<Props>`
-  display: block;
-  width: 100%;
-  padding: 8px;
-  margin: 15px 0;
-  text-align: center;
-  font-size: 18px;
-  cursor: ${(props: Props) => (props.cart === 0 ? "not-allowed" : "pointer")};
-  border: ${(props: Props) =>
-    props.feature === "checkout" ? "none" : "1px solid #ccc"};
-  border-radius: 5px;
-  background-color: ${(props: Props) =>
-    props.feature === "checkout" ? "blue" : "white"};
-  color: ${(props: Props) => (props.feature === "checkout" ? "white" : "blue")};
-`;
-const Purchased = styled.div<Props>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const PurchasedAnnouncement = styled.div<Props>`
-  color: white;
-  text-align: center;
-  background-color: ${(props: Props) =>
-    props.type === "purchase" ? "blue" : "green"};
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 20px;
-  width: 300px;
-  cursor: ${(props: Props) =>
-    props.type === "purchase" ? "pointer" : "default"};
-`;

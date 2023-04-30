@@ -4,6 +4,32 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RootState } from "../redux/reducer";
+import { flexBetweenStyles } from "./Re-use-css";
+
+const Container = styled.div``;
+
+const Navigation = styled.div`
+  height: 50px;
+  ${flexBetweenStyles}
+  background-color: #fff;
+  padding: 0 50px;
+  font-size: 20px;
+  font-weight: 500;
+`;
+
+const NavLeft = styled.div`
+  cursor: pointer;
+`;
+
+const Logo = styled.div`
+  color: #3b82f6;
+`;
+
+const NavCenter = styled.div``;
+const NavRight = styled.div``;
+const MenuItem = styled.div`
+  cursor: pointer;
+`;
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -18,7 +44,11 @@ const Nav = () => {
 
         <NavRight>
           <MenuItem onClick={() => navigate("/checkout")}>
-            <Badge color="secondary" badgeContent={cartItems.length} showZero>
+            <Badge
+              badgeContent={cartItems.length.toString()}
+              color="secondary"
+              overlap="rectangular"
+            >
               <ShoppingCartOutlined />
             </Badge>
           </MenuItem>
@@ -29,26 +59,3 @@ const Nav = () => {
 };
 
 export default Nav;
-
-const Container = styled.div``;
-const Navigation = styled.div`
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  padding: 0 50px;
-  font-size: 20px;
-  font-weight: 500;
-`;
-const NavLeft = styled.div`
-  cursor: pointer;
-`;
-const Logo = styled.div`
-  color: #3b82f6;
-`;
-const NavCenter = styled.div``;
-const NavRight = styled.div``;
-const MenuItem = styled.div`
-  cursor: pointer;
-`;
