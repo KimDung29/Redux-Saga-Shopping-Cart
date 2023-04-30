@@ -39,7 +39,7 @@ export const fetchProductsAsync = createAsyncThunk(
     const response = await axios.get<Product[]>(
       "https://fakestoreapi.com/products"
     );
-    return response.data.slice(0,8); // only get 8 items for this example
+    return response.data.slice(0, 8); // only get 8 items for this example
   }
 );
 
@@ -67,11 +67,12 @@ const productsSlices = createSlice({
         } else {
           state.cartItems.push(action.payload.newItem);
         }
-      } else {
+      } 
+      // else {
         // if the user forgot select quantity and click on ' Add to cart' button => show this message
-        alert(' Please select product quantity')
+        // alert(' Please select product quantity')
         
-      }
+      // }
     },
 
     onDecrementQuantity: (state, action) => {

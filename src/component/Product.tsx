@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import { RootState } from "../redux/reducer";
 import {
   CartItem,
@@ -13,10 +13,12 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { Add, Done, Remove, ShoppingCartOutlined } from "@material-ui/icons";
 import { Product } from "../redux/apiCall";
+import React from "react";
 const Nav = lazy(() => import("./Nav"));
 
 const Products = () => {
   const [displayBtn, setDisplayBtn] = useState(false);
+  const prevActionRef = useRef<boolean | undefined>();
 
   const { isLoading, error, products, quantity, currentProduct } = useSelector(
     (state: RootState) => state.products
@@ -25,8 +27,14 @@ const Products = () => {
   const dispatch: AppDispatch = useAppDispatch();
 
   useEffect(() => {
+    prevActionRef.current = displayBtn;
+  }, [displayBtn]);
+
+  console.log(prevActionRef.current);
+
+  useEffect(() => {
     dispatch(fetchProductsAsync());
-  }, [dispatch]);
+  }, [displayBtn]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -54,9 +62,12 @@ const Products = () => {
       product: currentProduct[0] || products[0],
       quantity: quantity,
     };
-
-    dispatch(onSendToCart({ newItem }));
     setDisplayBtn(true);
+    if (quantity === 0) {
+      window.alert(" Please select product quantity");
+      setDisplayBtn(false);
+    }
+    dispatch(onSendToCart({ newItem }));
   };
 
   return (
