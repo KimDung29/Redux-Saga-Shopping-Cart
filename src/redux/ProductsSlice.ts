@@ -68,11 +68,7 @@ const productsSlices = createSlice({
           state.cartItems.push(action.payload.newItem);
         }
       } 
-      // else {
-        // if the user forgot select quantity and click on ' Add to cart' button => show this message
-        // alert(' Please select product quantity')
-        
-      // }
+  
     },
 
     onDecrementQuantity: (state, action) => {

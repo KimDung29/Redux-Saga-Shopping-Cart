@@ -18,19 +18,12 @@ const Nav = lazy(() => import("./Nav"));
 
 const Products = () => {
   const [displayBtn, setDisplayBtn] = useState(false);
-  const prevActionRef = useRef<boolean | undefined>();
 
   const { isLoading, error, products, quantity, currentProduct } = useSelector(
     (state: RootState) => state.products
   );
 
   const dispatch: AppDispatch = useAppDispatch();
-
-  useEffect(() => {
-    prevActionRef.current = displayBtn;
-  }, [displayBtn]);
-
-  console.log(prevActionRef.current);
 
   useEffect(() => {
     dispatch(fetchProductsAsync());
