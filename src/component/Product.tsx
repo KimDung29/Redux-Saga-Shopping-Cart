@@ -171,7 +171,7 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(fetchProductsAsync());
-  }, [displayBtn]);
+  }, [dispatch]);
 
   if (isLoading) {
     return <div>Loading...</div>;

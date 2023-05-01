@@ -113,7 +113,7 @@ const productsSlices = createSlice({
       );
     },
     onPurchase:(state) => {
-      // after checkout already, make the cartItems empty 
+      // after checkout , make the cartItems empty 
    state.cartItems = []
     }
   },
