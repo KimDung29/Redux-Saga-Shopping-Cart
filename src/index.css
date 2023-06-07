@@ -1,0 +1,18 @@
+.number {
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  padding: 7px;
+  line-height: 10px;
+  text-align: center;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.index {
+  z-index: 10;
+}
+.pd {
+  padding-top: 70px;
+}
