@@ -14,5 +14,9 @@
   z-index: 10;
 }
 .pd {
-  padding-top: 70px;
+  padding-top: 90px;
+}
+.box-shadow {
+  -webkit-box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.53);
+  box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.53);
 }
