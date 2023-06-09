@@ -1,7 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +18,6 @@ export default function Home() {
     null
   );
   const [quantity, setQuantity] = useState(0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getProductFetch());

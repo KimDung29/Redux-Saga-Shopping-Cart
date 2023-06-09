@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { ProductType } from "./interface";
-
 interface ListProductType {
   products: ProductType[];
   setCurrentProduct: (product: ProductType) => void;
@@ -16,7 +15,6 @@ const ListProduct = memo(function ListProduct({
         <div
           onClick={() => {
             setCurrentProduct(product);
-            // setCheckProduct(false);
           }}
           className="container-fluid row mb-3 p-1 box-shadow rounded cursor-pointer align-items-center"
           key={product.id}
