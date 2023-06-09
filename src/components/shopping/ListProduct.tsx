@@ -1,5 +1,6 @@
-import { ProductType } from "../../redux/productSlice";
 import { memo } from "react";
+import { ProductType } from "./interface";
+
 interface ListProductType {
   products: ProductType[];
   setCurrentProduct: (product: ProductType) => void;
@@ -15,8 +16,9 @@ const ListProduct = memo(function ListProduct({
         <div
           onClick={() => {
             setCurrentProduct(product);
+            // setCheckProduct(false);
           }}
-          className="container-fluid row mb-3 p-1 border rounded cursor-pointer align-items-center"
+          className="container-fluid row mb-3 p-1 box-shadow rounded cursor-pointer align-items-center"
           key={product.id}
         >
           <div className=" col-4  text-center">
@@ -27,8 +29,8 @@ const ListProduct = memo(function ListProduct({
             />
           </div>
           <div className="col">
-            <h6>{product.title.slice(0, 30)}...</h6>
-            <p>{product.description.slice(0, 80)}...</p>
+            <h6>{product.title}</h6>
+            <p>{product.description.slice(0, 100)}</p>
             <h6>${product.price}</h6>
           </div>
         </div>

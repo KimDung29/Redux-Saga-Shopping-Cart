@@ -1,28 +1,6 @@
 import { PayloadAction, SerializedError, createSlice } from "@reduxjs/toolkit";
+import { CartType, ProductState } from "../components/shopping/interface";
 
-
-export interface ProductType {
-    id: number,
-    title: string,
-    price: number,
-    description: string,
-    category: string,
-    image: string,
-    rating: { 
-      rate: number,
-      count: number,
-    }
-}
-export interface Cart {
-    product: ProductType;
-    quantity: number
-}
-interface ProductState {
-    products: ProductType[];
-    isLoading: boolean;
-    error: null | SerializedError;
-    cart: Cart[]
-}
 const initialState: ProductState = {
     products: [],
     isLoading: false,
@@ -46,7 +24,7 @@ const productSlice = createSlice({
             state.error = new Error();
         },
         
-        onCart: (state, action: PayloadAction<{ newProduct: Cart }>) => {
+        onCart: (state, action: PayloadAction<{ newProduct: CartType }>) => {
             const existingItem = state.cart.find(
                 (p) => p.product.id === action.payload.newProduct.product.id
             );

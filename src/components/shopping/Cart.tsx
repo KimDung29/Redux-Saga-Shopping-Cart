@@ -36,13 +36,12 @@ export default function Cart() {
     if (confirm) {
       toast("Thanks for your purchase");
       dispatch(setCartAfterPurchase());
-    } else {
-      //
     }
   };
   const handleContinueShopping = () => {
     navigate("/");
   };
+
   // Tính toán tại đây và chỉ gửi kết quả tới store
   const handleDecrement = (id: number) => {
     const index = cart.findIndex((p) => p.product.id === id);
@@ -56,6 +55,9 @@ export default function Cart() {
       dispatch(onDecrement(updateCart));
     }
   };
+
+  const updateCart = [...cart];
+  console.log(updateCart);
 
   const handleIncrement = (id: number) => {
     const index = cart.findIndex((p) => p.product.id === id);
@@ -87,10 +89,10 @@ export default function Cart() {
             <div className="container col-9 ">
               {cart.map((cart) => (
                 <div
-                  className=" d-flex p-2  mb-5 border rounded cursor-pointer align-items-center"
+                  className=" d-flex p-2 py-3   mb-5 box-shadow rounded cursor-pointer align-items-center"
                   key={cart.product.id}
                 >
-                  <div className=" col-4 text-center">
+                  <div className=" col-4 text-center ">
                     <img
                       className=" w-50 h-auto border-none"
                       src={cart?.product?.image}
@@ -98,7 +100,7 @@ export default function Cart() {
                     />
                   </div>
                   <div className="col">
-                    <h3>{cart?.product?.title}</h3>
+                    <h4>{cart?.product?.title}</h4>
                     <p>{cart?.product?.description}</p>
                     <div className="d-flex justify-content-between ">
                       <div className="d-flex ">
@@ -137,7 +139,7 @@ export default function Cart() {
               ))}
             </div>
 
-            <div className=" align-items-start border rounded px-4 py-2 text-center">
+            <div className=" align-items-start box-shadow rounded pb-3 px-4 py-2 text-center">
               <h4>Order Info</h4>
               <div className="row justify-content-between mb-2">
                 <div>Subtotal:</div>

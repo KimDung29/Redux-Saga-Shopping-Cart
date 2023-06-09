@@ -5,12 +5,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  Cart,
-  ProductType,
-  getProductFetch,
-  onCart,
-} from "../../redux/productSlice";
+import { getProductFetch, onCart } from "../../redux/productSlice";
+import { CartType, ProductType } from "./interface";
 
 const Nav = lazy(() => import("../Nav"));
 const ListProduct = lazy(() => import("./ListProduct"));
@@ -45,7 +41,7 @@ export default function Home() {
     item: ProductType
   ) => {
     e.preventDefault();
-    const newProduct: Cart = {
+    const newProduct: CartType = {
       product: item,
       quantity: quantity,
     };
@@ -71,8 +67,8 @@ export default function Home() {
           <div className="container row mx-auto pd">
             {products.length === 0 && <div>There are no products</div>}
             {/* DETAIL */}
-            <div className="col mb-2 ">
-              <div className="border rounded py-3 px-2">
+            <div className="col mb-2  ">
+              <div className="box-shadow rounded py-3 px-2">
                 <div className="col-8 text-center mx-auto mb-2 ">
                   <img
                     className=" w-50 h-auto"
@@ -123,7 +119,6 @@ export default function Home() {
                   <ListProduct
                     products={products}
                     setCurrentProduct={setCurrentProduct}
-                    // setCheckProduct={setCheckProduct}
                   />
                 </Suspense>
               )}

@@ -17,17 +17,17 @@ export default function Nav() {
   return (
     <>
       <div className="navbar bg-primary text-white mb-5 position-fixed w-100 index">
-        <div onClick={() => navigate("/")} className="cursor-pointer">
+        <h5 onClick={() => navigate("/")} className="cursor-pointer">
           Product
-        </div>
-        <div>STORE.</div>
-        <div onClick={() => navigate("/cart")} className="cursor-pointer">
+        </h5>
+        <h4>STORE.</h4>
+        <h5 onClick={() => navigate("/cart")} className="cursor-pointer">
           <i className="fas fa-shopping-cart">
             <sup className="text-white bg-danger p-1 rounded-circle d-inline-block number ">
               {cart.length}
             </sup>
           </i>
-        </div>
+        </h5>
       </div>
       <ToastContainer />
     </>
