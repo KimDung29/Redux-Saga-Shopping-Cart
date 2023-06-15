@@ -10,11 +10,15 @@ import {
 } from "../../redux/productSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { selectCart } from "../../redux/reselect";
 
 const Nav = lazy(() => import("../Nav"));
 
 export default function Cart() {
-  const { cart, products } = useSelector((state: RootState) => state.products);
+  const { cart } = useSelector((state: RootState) => ({
+    cart: selectCart(state),
+  }));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,7 +61,6 @@ export default function Cart() {
   };
 
   const updateCart = [...cart];
-  console.log(updateCart);
 
   const handleIncrement = (id: number) => {
     const index = cart.findIndex((p) => p.product.id === id);

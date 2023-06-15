@@ -2,11 +2,13 @@ import { memo } from "react";
 import { ProductType } from "./interface";
 interface ListProductType {
   products: ProductType[];
+  isLoading: boolean;
   setCurrentProduct: (product: ProductType) => void;
 }
 
 const ListProduct = memo(function ListProduct({
   products,
+  isLoading,
   setCurrentProduct,
 }: ListProductType) {
   return (
@@ -22,7 +24,7 @@ const ListProduct = memo(function ListProduct({
           <div className=" col-4  text-center">
             <img
               className=" w-50 h-auto border-none"
-              src={product.image}
+              src={isLoading ? "Loading..." : product.image}
               alt="Responsive image"
             />
           </div>

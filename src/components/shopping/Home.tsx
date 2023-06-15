@@ -1,19 +1,29 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducer";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProductFetch, onCart } from "../../redux/productSlice";
 import { CartType, ProductType } from "./interface";
+import {
+  selectError,
+  selectIsLoading,
+  selectProducts,
+} from "../../redux/reselect";
 
 const Nav = lazy(() => import("../Nav"));
 const ListProduct = lazy(() => import("./ListProduct"));
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { isLoading, error, products, cart } = useSelector(
-    (state: RootState) => state.products
-  );
+  // const { isLoading, error, products, cart } = useSelector(
+  //   (state: RootState) => state.products
+  // );
+
+  const products = useSelector(selectProducts);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
   const [currentProduct, setCurrentProduct] = useState<ProductType | null>(
     null
   );
@@ -23,15 +33,15 @@ export default function Home() {
     dispatch(getProductFetch());
   }, []);
 
-  const handleDecrement = () => {
+  const handleDecrement = useCallback(() => {
     if (quantity > 0) {
-      setQuantity((prev) => prev - 1);
+      setQuantity((pre) => pre - 1);
     }
-  };
+  }, [quantity]);
 
-  const handleIncrement = () => {
+  const handleIncrement = useCallback(() => {
     setQuantity((prev) => prev + 1);
-  };
+  }, [quantity]);
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -115,6 +125,7 @@ export default function Home() {
                 <Suspense fallback={<div>Loading...</div>}>
                   <ListProduct
                     products={products}
+                    isLoading={isLoading}
                     setCurrentProduct={setCurrentProduct}
                   />
                 </Suspense>
